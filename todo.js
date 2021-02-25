@@ -17,27 +17,33 @@ function showTodoList(){
 }
 //HOF
 function showTodoListWay2(){
-    let display = todos.map((item) => `<li>${item}</li>`)
+    let display = todos.map((item) => 
+    `
+    <li>${item.content}
+    <button>Done</button>
+    </li>
+    `
+    )
     todoList.innerHTML = display.join('') //除逗點
+}
+//addTodo 從下面有共同使用的情況整理上來
+function addTodo(){
+    //去除掉很多空白的情況
+    if(todoInput.value.trim()){
+        const item = {id: +new Date(),content:todoInput.value,done:false}
+        todos.unshift(item)
+        }
+        console.log(todos);
+        showTodoListWay2()
+        todoInput.value = ''  //清空
 }
 
 todoAdd.addEventListener('click',()=>{
-    //去除掉很多空白的情況
-    if(todoInput.value.trim()){
-    todos.unshift(todoInput.value)
-    }
-    console.log(todos);
-    showTodoListWay2()
-    todoInput.value = ''
+    addTodo()
 })
 
 todoInput.addEventListener('keypress',(event)=>{
     if(event.key === 'Enter'){ //較新的語法
-        if(todoInput.value.trim()){
-            todos.unshift(todoInput.value)
-        }
-        console.log(todos);
-        showTodoListWay2()
-        todoInput.value = '' //清空
+    addTodo()
     }   
 })
