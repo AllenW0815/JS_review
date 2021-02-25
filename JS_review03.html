@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>1</h1>
+    <button>投擲</button>
+    <script>
+      const array = [1, 2, 3, 4, 5];
+      const arrayTwo = ["1", "2", 3, "4", "k"];
+
+      let ans = array.map((item) => item * 3);
+
+      console.log(ans);
+
+      //直接切短陣列或清空
+      // array.length = 3;
+      // console.log(array);
+
+      array.forEach((item) => console.log(item));
+
+      let ansTwo = arrayTwo.filter((item) => typeof item === "number");
+      console.log(ansTwo);
+
+      //擲骰子
+      const h1 = document.querySelector("h1");
+      const btn = document.querySelector("button");
+
+      function tossDice() {
+        h1.innerText = Math.ceil(Math.random() * 6);
+      }
+
+      btn.addEventListener("click", tossDice);
+    </script>
+  </body>
+</html>

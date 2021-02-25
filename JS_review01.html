@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1 id="total">0</h1>
+    <button id="add">+</button>
+    <button id="minus">-</button>
+
+    <script>
+      const btnAdd = document.querySelector("#add");
+      const btnMinus = document.querySelector("#minus");
+      let total = document.querySelector("#total");
+
+      const counter = function (btn, value, total) {
+        btn.addEventListener("click", function () {
+          total.innerHTML = +total.innerHTML + value;
+        });
+      };
+
+      counter(btnAdd, +1, total);
+      counter(btnMinus, -1, total);
+    </script>
+  </body>
+</html>
