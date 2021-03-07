@@ -7,8 +7,8 @@ const todoAdd = selectDom('#todoAdd')
 const todoList = selectDom('#todoList')
 //存輸入的內容
 let todos = [
-    {id:1,content:'學CSS',done:true},
-    {id:2,content:'學React',done:false}
+    {id:1,content:'學CSS',done:true,edited:false},
+    {id:2,content:'學React',done:false,edited:true}
 ]
 //renders 一般for迴圈
 function showTodoList(){
@@ -35,18 +35,52 @@ function deleteItem(id){
     //複製一份指派給原始陣列
     todos = [...newTodos]
 }
+//editItem
+function editItem (id){
+    for(let i =0 ; i<todos.length;i++){
+        //將全部先關閉編輯 實現一次只能編輯一個
+        todos[i].edited = false
+        if(todos[i].id == id){
+            todos[i].edited = !todos[i].edited
+        }
+    }
+}
+//saveItem
+function saveItem (id){
+    let newContent =  document.querySelector('.new-content')
+    for(let i =0 ; i<todos.length;i++){
+        if(todos[i].id == id){
+            todos[i].edited = !todos[i].edited
+            todos[i].content = newContent.value
+        }
+    }
+}
 //renders HOF
 function showTodoListWay2(){
-    let display = todos.map((item) =>
-    item.done
-    ?`<li><del>${item.content}</del>
-    <button class="done" data-id="${item.id}">Done</button>
-    <button class="del"  data-id="${item.id}">Delete</button>
-    </li>`
-    :`<li>${item.content}
-    <button class="done" data-id="${item.id}">Done</button>
-    <button class="del"  data-id="${item.id}">Delete</button>
-    </li>`
+    let display = todos.map((item) =>{
+        let displayString = ''
+
+        displayString = item.edited
+        ?`<li><input type="text" class="new-content" value="${item.content}" />
+        <button class="save" data-id="${item.id}">Save</button>
+        <button class="done" data-id="${item.id}">Done</button>
+        <button class="del"  data-id="${item.id}">Delete</button>
+        </li>`
+        :item.done
+        ?`<li><del>${item.content}</del>
+        <button class="edit" data-id="${item.id}">Edit</button>
+        <button class="done" data-id="${item.id}">Done</button>
+        <button class="del"  data-id="${item.id}">Delete</button>
+        </li>`
+        :`<li>${item.content}
+        <button class="edit" data-id="${item.id}">Edit</button>
+        <button class="done" data-id="${item.id}">Done</button>
+        <button class="del"  data-id="${item.id}">Delete</button>
+        </li>`
+
+        return displayString
+        }
+        
     )
     todoList.innerHTML = display.join('') //除逗點
 
@@ -65,6 +99,22 @@ function showTodoListWay2(){
     for(let i =0 ; i<delBtns.length;i++){
         delBtns[i].addEventListener('click',function(e){
             deleteItem(this.dataset.id)
+            showTodoListWay2()
+        })
+    }
+    //加掛編輯功能
+    const editBtns = document.getElementsByClassName("edit")
+    for(let i =0 ; i<editBtns.length;i++){
+        editBtns[i].addEventListener('click',function(e){
+            editItem(this.dataset.id)
+            showTodoListWay2()
+        })
+    }
+    //加掛儲存功能
+    const saveBtns = document.getElementsByClassName("save")
+    for(let i =0 ; i<saveBtns.length;i++){
+        saveBtns[i].addEventListener('click',function(e){
+            saveItem(this.dataset.id)
             showTodoListWay2()
         })
     }
