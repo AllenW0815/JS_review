@@ -6,10 +6,12 @@ const todoInput = selectDom('#todoInput')
 const todoAdd = selectDom('#todoAdd')
 const todoList = selectDom('#todoList')
 //存輸入的內容
-let todos = [
-    {id:1,content:'學CSS',done:true,edited:false},
-    {id:2,content:'學React',done:false,edited:true}
-]
+let todos = []
+
+// let todos = [
+//     {id:1,content:'學CSS',done:true,edited:false},
+//     {id:2,content:'學React',done:false,edited:true}
+// ]
 //renders 一般for迴圈
 function showTodoList(){
     let display = ''
@@ -118,6 +120,8 @@ function showTodoListWay2(){
             showTodoListWay2()
         })
     }
+    //存到localStorage裡
+    localStorage.setItem("todos",JSON.stringify(todos))    
 }
 //addTodo 從下面有共同使用的情況整理上來
 function addTodo(){
@@ -129,6 +133,11 @@ function addTodo(){
         // console.log(todos);
         showTodoListWay2()
         todoInput.value = ''  //清空
+        // console.log(todos);
+        // console.log(JSON.stringify(todos));
+        // localStorage.clear()
+        // localStorage.setItem("todos",JSON.stringify(todos))
+        
 }
 
 //input加入的部分
@@ -141,5 +150,21 @@ todoInput.addEventListener('keypress',(event)=>{
     }   
 })
 
+//實作刷新頁面但資料不變
+const initTodoList = () => {
+    const localStorageTodos = localStorage.getItem('todos')
+    if(localStorageTodos){
+        console.log(localStorageTodos);
+        todos = JSON.parse(localStorageTodos)
+        // console.log(todos)
+        // JSON.parse(todos)
+        showTodoListWay2()
+    }else{
+        showTodoListWay2()
+    }
+
+}
+
+
 //初始化呼叫
-showTodoListWay2()
+initTodoList()
