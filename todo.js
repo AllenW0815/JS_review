@@ -5,8 +5,11 @@ function selectDom(tag){
 const todoInput = selectDom('#todoInput')
 const todoAdd = selectDom('#todoAdd')
 const todoList = selectDom('#todoList')
+const searchInput = selectDom('#searchInput')
+const todoSearch = selectDom('#todoSearch')
 //存輸入的內容
 let todos = []
+let searchInputText = ''
 
 // let todos = [
 //     {id:1,content:'學CSS',done:true,edited:false},
@@ -20,6 +23,8 @@ function showTodoList(){
     }
     todoList.innerHTML = display
 }
+//--------------------------------------------------------------------
+///功能
 //toggleDeleteLine
 function toggleDeleteLine(id){
     for(let i =0 ; i<todos.length;i++){
@@ -57,9 +62,27 @@ function saveItem (id){
         }
     }
 }
-//renders HOF
+//searchItem
+function searchItem(){
+    const compareItem = searchInput.value
+    const localStorageTodos = localStorage.getItem('todos')
+    // console.log(compareItem);
+    // console.log(typeof compareItem);
+    // console.log(JSON.parse(localStorageTodos));
+    
+    const result = JSON.parse(localStorageTodos).filter(item=>{
+        if(item.content.include(compareItem)){
+            
+        }
+    })
+    console.log(result);
+
+}
+//--------------------------------------------------------------------
+//renders
 function showTodoListWay2(){
     let display = todos.map((item) =>{
+        if(!item.content.includes(searchInputText)) return
         let displayString = ''
 
         displayString = item.edited
@@ -123,6 +146,7 @@ function showTodoListWay2(){
     //存到localStorage裡
     localStorage.setItem("todos",JSON.stringify(todos))    
 }
+//--------------------------------------------------------------------
 //addTodo 從下面有共同使用的情況整理上來
 function addTodo(){
     //去除掉很多空白的情況
@@ -149,12 +173,22 @@ todoInput.addEventListener('keypress',(event)=>{
     addTodo()
     }   
 })
+//input搜尋的部分
+todoSearch.addEventListener('click',()=>{
+    searchInputText = searchInput.value
+    showTodoListWay2()
+})
+function searchFunc(){
+    searchInputText = searchInput.value
+    showTodoListWay2()
+}
+
 
 //實作刷新頁面但資料不變
 const initTodoList = () => {
     const localStorageTodos = localStorage.getItem('todos')
     if(localStorageTodos){
-        console.log(localStorageTodos);
+        // console.log(localStorageTodos);
         todos = JSON.parse(localStorageTodos)
         // console.log(todos)
         // JSON.parse(todos)

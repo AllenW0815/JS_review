@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1 id="show"></h1>
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+    <script>
+      //這三個物件都要使用new
+      const date = new Date();
+      const error = new Error();
+      const regExp = new RegExp();
+
+      console.log(date);
+      console.log(+date);
+      //用Date在JS裡面執行時間並不夠可靠與精確 應使用其他函式庫 ex: performance.now or benchmark.js
+
+      const oneToTen = () => {
+        for (let i = 0; i < 6; i++) {
+          console.log(i);
+        }
+      };
+
+      const t0 = window.performance.now();
+      oneToTen();
+      const t1 = window.performance.now();
+      console.log("oneToTen花了" + (t1 - t0) + "毫秒");
+
+      //本地化格式化
+      console.log(date.toLocaleString());
+      console.log(
+        "-------------------------------------------------------------------------"
+      );
+      //-----------------------------------------------------------------
+
+      const show = document.querySelector("#show");
+      const start = document.querySelector("#start");
+      const stop = document.querySelector("#stop");
+      const displayTime = () => {
+        // show.innerHTML = now.toLocaleString();
+        const now = new Date();
+        show.innerHTML = now.toLocaleTimeString();
+      };
+
+      let timer = null;
+      start.addEventListener("click", function () {
+        timer = setInterval(displayTime, 1000);
+      });
+      stop.addEventListener("click", function () {
+        clearInterval(timer);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+body {
+    font-family: system-ui;
+    background: #f06d06;
+    color: white;
+    text-align: center;
+}
+
+input{
+    outline: none;
+    border: none;
+}
+
+li{
+    list-style-type: none;
+    margin: 5px 0;
+}
+
+button{
+    outline: none;
+    border: none;
+    background-color: #fff;
+    border-radius: 15px;
+    cursor: pointer;
+    color: #944910;
+}
+
