@@ -63,6 +63,7 @@ function saveItem (id){
     }
 }
 //searchItem
+//本來想用filter比對搜尋關鍵字後產出新陣列 在去重新render畫面 但好像要多寫很多code
 function searchItem(){
     const compareItem = searchInput.value
     const localStorageTodos = localStorage.getItem('todos')
@@ -71,17 +72,15 @@ function searchItem(){
     // console.log(JSON.parse(localStorageTodos));
     
     const result = JSON.parse(localStorageTodos).filter(item=>{
-        if(item.content.include(compareItem)){
-            
-        }
+        //做篩選比對動作
     })
     console.log(result);
-
 }
 //--------------------------------------------------------------------
 //renders
 function showTodoListWay2(){
     let display = todos.map((item) =>{
+        //用如果內文不包含搜尋關鍵字的話就return掉來實現搜尋功能
         if(!item.content.includes(searchInputText)) return
         let displayString = ''
 
