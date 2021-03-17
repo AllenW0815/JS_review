@@ -24,3 +24,7 @@ button{
     color: #944910;
 }
 
+.active{
+    background-color: #be2f03;
+    color: #fff;
+}

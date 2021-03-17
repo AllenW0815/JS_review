@@ -7,9 +7,12 @@ const todoAdd = selectDom('#todoAdd')
 const todoList = selectDom('#todoList')
 const searchInput = selectDom('#searchInput')
 const todoSearch = selectDom('#todoSearch')
+const unDone = selectDom('#unDone')
+const isDone = selectDom('#isDone')
 //存輸入的內容
 let todos = []
 let searchInputText = ''
+let doneOrNot = null
 
 // let todos = [
 //     {id:1,content:'學CSS',done:true,edited:false},
@@ -82,6 +85,8 @@ function showTodoListWay2(){
     let display = todos.map((item) =>{
         //用如果內文不包含搜尋關鍵字的話就return掉來實現搜尋功能
         if(!item.content.includes(searchInputText)) return
+        //點未完成就排除掉done:true的item
+        if(item.done === doneOrNot) return
         let displayString = ''
 
         displayString = item.edited
@@ -177,10 +182,37 @@ todoSearch.addEventListener('click',()=>{
     searchInputText = searchInput.value
     showTodoListWay2()
 })
+searchInput.addEventListener('change',()=>{
+    searchInputText = searchInput.value
+    showTodoListWay2()
+})
+//這個是把事件註冊在html的時候呼叫
 function searchFunc(){
     searchInputText = searchInput.value
     showTodoListWay2()
 }
+//篩選的部分 改變doneOrNot的值在render畫面時判斷要顯示哪種
+//並在再度點擊時候可以設定回null已顯示全部
+unDone.addEventListener('click',(e)=>{
+    if(doneOrNot=== null){
+        doneOrNot = true
+        e.target.classList.add('active')
+    }else if(doneOrNot === true){
+        doneOrNot = null
+        e.target.classList.remove('active')
+    }    
+    showTodoListWay2()
+})
+isDone.addEventListener('click',(e)=>{
+    if(doneOrNot=== null){
+        doneOrNot = false
+        e.target.classList.add('active')
+    }else if(doneOrNot === false){
+        doneOrNot = null
+        e.target.classList.remove('active')
+    } 
+    showTodoListWay2()
+})
 
 
 //實作刷新頁面但資料不變
