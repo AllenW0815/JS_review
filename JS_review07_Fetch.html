@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      ul {
+        list-style-type: decimal-leading-zero;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>API TEST</h1>
+    <ul id="show"></ul>
+
+    <script>
+      const cors = "https://cors-anywhere.herokuapp.com/"; // use cors-anywhere to fetch api data
+      const url =
+        "https://od.moi.gov.tw/api/v1/rest/datastore/301000000A-001441-005"; // origin api url
+
+      fetch(`${cors}${url}`, { method: "GET" })
+        .then((response) => {
+          // if (!response.ok) throw new Error(response.statusText);
+          console.log(response);
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data);
+          const records = data.result.records;
+          console.log(records);
+          document.querySelector("#show").innerHTML = records
+            .map((item) => {
+              return `<li>${item.birth_count}</li>`;
+            })
+            .join("");
+        })
+        .catch((error) => {
+          // console.log("FAIL");
+        });
+    </script>
+  </body>
+</html>

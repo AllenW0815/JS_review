@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1 id="total">0</h1>
+    <button id="add">+</button>
+    <button id="minus">-</button>
+
+    <script>
+      //處理非同步事件
+      const promise = new Promise(function (resolve, reject) {
+        //succeed
+        resolve(3);
+        //fail
+        // reject(reason);
+      });
+      //and then something
+      promise.then(
+        function (value) {
+          console.log("OK", value);
+        },
+        function (reason) {
+          console.log("NO", reason);
+        }
+      );
+    </script>
+  </body>
+</html>
